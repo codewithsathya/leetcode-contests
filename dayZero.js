@@ -107,13 +107,17 @@ async function start() {
     const pages = pastContests.pageNum;
     const allContests = [];
 
-    const contestData = fs.readJSONSync("./contestData.json");
+    let contestData = fs.readJSONSync("./contestData.json");
 
     for (let i = 1; i <= pages; i++) {
-        const contests = await getPastContests(i);
-        for (const contest of contests.data) {
+        const pastContests = await getPastContests(i);
+        const contests = pastContests.data.reverse();
+        for (const contest of contests) {
             if(contestData[contest.title]) continue;
-            contestData[contest.title] = [];
+            contestData = {
+                [contest.title]: [],
+                ...contestData,
+            }
             allContests.push(contest);
             const questions = await getContestQuestions(contest.titleSlug);
             for(const question of questions) {
