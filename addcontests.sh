@@ -1,4 +1,6 @@
+#!/bin/zsh
 
+source /home/ubuntu/.zshrc
 
 cd /home/ubuntu/projects/leetcode-contests
 
